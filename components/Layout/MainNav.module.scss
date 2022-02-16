@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  padding: 1rem 2rem;
+
+  ul {
+    display: flex;
+    gap: 1rem;
+  }
+}
