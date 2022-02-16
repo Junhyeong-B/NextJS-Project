@@ -1,0 +1,50 @@
+.container {
+  width: 20rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  background-color: #0f141a;
+  padding: 0.5rem;
+
+  img {
+    border-radius: 0.5rem;
+    width: 100%;
+  }
+
+  h2 {
+    margin: 0.25rem 0;
+  }
+}
+
+.game {
+  background-color: #1f2832;
+  color: #c3c6c9;
+  padding: 0.25rem 0.25rem;
+  border-radius: 0.25rem;
+  position: relative;
+
+  p {
+    text-indent: 0.5rem;
+  }
+}
+
+.publisher {
+  font-size: 0.875rem;
+  font-weight: initial;
+}
+
+.badge_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.badge {
+  background-color: #0de782;
+  color: black;
+  font-size: 0.75rem;
+  margin: 0 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+  font-weight: bold;
+}
