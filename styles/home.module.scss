@@ -1,0 +1,9 @@
+.game_list {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: self-end;
+  gap: 1rem;
+}
