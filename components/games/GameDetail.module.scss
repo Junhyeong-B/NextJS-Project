@@ -1,0 +1,54 @@
+.section {
+  border: 1px solid;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #1a2024;
+
+  ul {
+    padding: 0;
+  }
+}
+
+.title_image {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.information {
+  display: flex;
+
+  &__game {
+    background-color: #0f141a;
+    color: #d9dadd;
+    flex-grow: 1;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding: 0 1rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}
+
+.requirements {
+  border: 1px solid;
+  width: fit-content;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  background-color: #0f141a;
+  color: #d9dadd;
+
+  h3 {
+    background-color: #1f2832;
+    text-align: center;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0;
+  }
+}
+
+.description {
+  white-space: break-spaces;
+  color: #d9dadd;
+}
