@@ -11,3 +11,12 @@
     gap: 1rem;
   }
 }
+
+.current_page {
+  color: #3366e7;
+
+  a {
+    cursor: auto;
+    user-select: none;
+  }
+}
