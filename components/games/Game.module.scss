@@ -1,12 +1,21 @@
 .container {
   width: 20rem;
-  border: 1px solid;
   border-radius: 0.5rem;
   background-color: #0f141a;
-  padding: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 500ms ease;
+  border: 1px solid;
+  display: flex;
+  flex-flow: column;
+
+  &:hover {
+    border: 1px solid #28aaa9;
+  }
 
   img {
-    border-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
     width: 100%;
   }
 
@@ -18,9 +27,11 @@
 .game {
   background-color: #1f2832;
   color: #c3c6c9;
-  padding: 0.25rem 0.25rem;
-  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
   position: relative;
+  flex-grow: 1;
 
   p {
     text-indent: 0.5rem;
