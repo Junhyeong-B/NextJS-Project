@@ -15,7 +15,7 @@ const HomePage: NextPage<HomePageProps> = (props) => {
   };
 
   return (
-    <div className={classes.container}>
+    <div>
       <h1 className={classes.h1}>💻PC Live games list</h1>
       <ul className={classes.game_list}>
         {props.games.map((game, i) => {
