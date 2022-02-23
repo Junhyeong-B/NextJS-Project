@@ -6,3 +6,4 @@ export type { GameProps } from "./games";
 export type { GameDetailProps } from "./games";
 
 export { Slider } from "./UI";
+export { Button } from "./UI";
