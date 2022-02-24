@@ -1,0 +1,33 @@
+.container {
+  margin: 10rem auto 0;
+  width: 30rem;
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+
+  input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
+.signup {
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: color 150ms ease;
+  user-select: none;
+  width: fit-content;
+  margin: 0.5rem auto;
+
+  &:hover {
+    color: #2757d1;
+  }
+}
