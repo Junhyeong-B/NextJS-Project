@@ -7,3 +7,5 @@ export const customAxios: AxiosInstance = axios.create({
     "x-rapidapi-key": `${process.env.NEXT_PUBLIC_KEY}`,
   },
 });
+
+export { signUpAPI, signInAPI } from "./auth";
