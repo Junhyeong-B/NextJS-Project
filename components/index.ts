@@ -7,3 +7,6 @@ export type { GameDetailProps } from "./games";
 
 export { Slider } from "./UI";
 export { Button } from "./UI";
+
+export { SelectBox } from "./select";
+export { SelectCheckBox } from "./select";
