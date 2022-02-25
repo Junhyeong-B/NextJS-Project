@@ -39,10 +39,9 @@ const LoginPage: NextPage = () => {
 
     if (isSignup) {
       try {
-        const result = await signUpAPI({
+        await signUpAPI({
           data: JSON.stringify(data),
         }).then((response) => response.data);
-        console.log(result);
 
         alert("회원가입이 완료되었습니다.");
         setIsSignup(false);
