@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { HTMLAttributes } from "react";
 import { Slider } from "..";
 import classes from "./GameDetail.module.scss";
 
@@ -29,66 +30,67 @@ export type GameDetailProps = {
   }[];
 };
 
-const GameDetail = (props: { detail: GameDetailProps }): JSX.Element => {
+const GameDetail = ({
+  detail,
+  ...props
+}: { detail: GameDetailProps } & HTMLAttributes<HTMLElement>): JSX.Element => {
   return (
-    <section className={classes.section}>
+    <section className={classes.section} {...props}>
       <Head>
-        <title>{props.detail.title}</title>
-        <meta name="description" content={props.detail.description}></meta>
+        <title>{detail.title}</title>
+        <meta name="description" content={detail.description}></meta>
       </Head>
       <div className={classes.information}>
         <img
-          src={props.detail.thumbnail}
-          alt={props.detail.title}
+          src={detail.thumbnail}
+          alt={detail.title}
           className={classes.title_image}
         />
         <div className={classes.information__game}>
-          <h1>Title: {props.detail.title}</h1>
+          <h1>Title: {detail.title}</h1>
           <ul>
             <li>
-              <b>Developer:</b> {props.detail.developer}
+              <b>Developer:</b> {detail.developer}
             </li>
             <li>
-              <b>Genre:</b> {props.detail.genre}
+              <b>Genre:</b> {detail.genre}
             </li>
             <li>
-              <b>Platform:</b> {props.detail.platform}
+              <b>Platform:</b> {detail.platform}
             </li>
             <li>
-              <b>Publisher:</b> {props.detail.publisher}
+              <b>Publisher:</b> {detail.publisher}
             </li>
             <li>
-              <b>Release Date:</b> {props.detail.release_date}
+              <b>Release Date:</b> {detail.release_date}
             </li>
           </ul>
         </div>
       </div>
-      <div className={classes.requirements}>
-        <h3>Minimum System Requirements</h3>
-        <ul>
-          <li>
-            <b>Graphics:</b> {props.detail.minimum_system_requirements.graphics}
-          </li>
-          <li>
-            <b>Memory:</b> {props.detail.minimum_system_requirements.memory}
-          </li>
-          <li>
-            <b>OS:</b> {props.detail.minimum_system_requirements.os}
-          </li>
-          <li>
-            <b>Processor:</b>{" "}
-            {props.detail.minimum_system_requirements.processor}
-          </li>
-          <li>
-            <b>Storage:</b> {props.detail.minimum_system_requirements.storage}
-          </li>
-        </ul>
-      </div>
-      <Slider
-        title={props.detail.title}
-        screenshots={props.detail.screenshots}
-      />
-      <p className={classes.description}>{props.detail.description}</p>
+      {detail.minimum_system_requirements && (
+        <div className={classes.requirements}>
+          <h3>Minimum System Requirements</h3>
+          <ul>
+            <li>
+              <b>Graphics:</b> {detail.minimum_system_requirements.graphics}
+            </li>
+            <li>
+              <b>Memory:</b> {detail.minimum_system_requirements.memory}
+            </li>
+            <li>
+              <b>OS:</b> {detail.minimum_system_requirements.os}
+            </li>
+            <li>
+              <b>Processor:</b> {detail.minimum_system_requirements.processor}
+            </li>
+            <li>
+              <b>Storage:</b> {detail.minimum_system_requirements.storage}
+            </li>
+          </ul>
+        </div>
+      )}
+      <Slider title={detail.title} screenshots={detail.screenshots} />
+      <p className={classes.description}>{detail.description}</p>
     </section>
   );
 };
