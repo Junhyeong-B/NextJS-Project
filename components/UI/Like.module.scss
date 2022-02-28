@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  background-color: #2d2c38;
+  color: white;
+  padding: 0.25rem 1rem;
+  border-bottom-left-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: color 250ms ease, transform 100ms ease;
+  user-select: none;
+
+  svg {
+    width: 1.825rem;
+    height: 1.825rem;
+    margin-right: 1.375rem;
+    fill: #fff;
+  }
+
+  &:hover {
+    color: #f0bb2f;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.favorite {
+  svg {
+    fill: #f0bb2f;
+  }
+}
