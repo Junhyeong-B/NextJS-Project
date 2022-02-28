@@ -5,7 +5,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectProps } from ".";
 import classes from "./Select.module.scss";
 
@@ -13,6 +13,7 @@ const SelectBox = ({
   type,
   typeList,
   onChangeHandler,
+  currentValue,
 }: SelectProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
 
@@ -20,6 +21,12 @@ const SelectBox = ({
     setValue(event.target.value);
     onChangeHandler && onChangeHandler(event.target.value);
   };
+
+  useEffect(() => {
+    if (currentValue) {
+      setValue(currentValue);
+    }
+  }, [currentValue]);
 
   return (
     <div className={classes.container}>

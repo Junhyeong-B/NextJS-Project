@@ -5,4 +5,6 @@ export type SelectProps = {
   type: "Platform" | "Category" | "Sort-by";
   typeList: readonly string[];
   onChangeHandler: (values: string | string[]) => void;
+  currentValue?: string;
+  currentValues?: string[];
 };
