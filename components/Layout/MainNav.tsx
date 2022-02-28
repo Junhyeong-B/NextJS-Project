@@ -27,7 +27,9 @@ const MainNav = (): JSX.Element => {
 
   return (
     <header className={classes.header}>
-      <h1>Free To Game List</h1>
+      <h1 className={classes.h1}>
+        <Link href="/">Free To Game List</Link>
+      </h1>
       <nav>
         <ul>
           <li className={`${router.pathname === "/" && classes.current_page}`}>
