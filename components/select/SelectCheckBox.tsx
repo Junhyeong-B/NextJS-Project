@@ -30,7 +30,7 @@ const SelectCheckBox = ({
 
   return (
     <div className={classes.container}>
-      <FormControl fullWidth>
+      <FormControl sx={{ width: 300 }}>
         <InputLabel id={type}>{type}</InputLabel>
         <Select
           labelId={type}
