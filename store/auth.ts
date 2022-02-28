@@ -25,12 +25,12 @@ const authSlice = createSlice({
     logout(state) {
       state.token = "";
       state.isLoggedIn = false;
-      localStorage.removeItem(AUTH_STORAGE_KEY);
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
     },
     login(state, action: LoginHandler) {
       state.token = action.payload.idToken;
       state.isLoggedIn = true;
-      localStorage.setItem(AUTH_STORAGE_KEY, state.token);
+      sessionStorage.setItem(AUTH_STORAGE_KEY, state.token);
     },
   },
 });
