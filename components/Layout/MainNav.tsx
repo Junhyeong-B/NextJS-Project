@@ -19,9 +19,12 @@ const MainNav = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const idToken = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (idToken) {
-      dispatch(authActions.login({ idToken }));
+    const initialState = { token: "", email: "" };
+    const { token, email } = JSON.parse(
+      sessionStorage.getItem(AUTH_STORAGE_KEY) || JSON.stringify(initialState)
+    );
+    if (token && email) {
+      dispatch(authActions.login({ idToken: token, email }));
     }
   }, [dispatch]);
 
