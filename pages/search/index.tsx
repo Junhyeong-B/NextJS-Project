@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { customAxios } from "../../apis";
+import { customAxios, fetchFavoriteLists } from "../../apis";
 import {
   GameProps,
   SearchResultGame,
@@ -10,7 +11,7 @@ import {
   SelectCheckBox,
 } from "../../components";
 import { PLATFORMS, SORTBY, TAGS } from "../../constants";
-import { gameActions, StoreGameType } from "../../store";
+import { AuthType, gameActions, StoreGameType } from "../../store";
 import classes from "../../styles/search.module.scss";
 
 const SearchPage: NextPage = () => {
@@ -23,6 +24,14 @@ const SearchPage: NextPage = () => {
   );
   const dispatch = useDispatch();
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const favoriteLists = useSelector(
+    (state: { game: StoreGameType }) => state.game.favoriteLists
+  );
+  const { token, userEmail } = useSelector(
+    (state: { auth: AuthType }) => state.auth
+  );
+  const favoriteListsSet = useRef<Set<number>>(new Set<number>());
 
   const onPlatformChange = (value: string | string[]) => {
     setPlatform(value as string);
@@ -84,8 +93,43 @@ const SearchPage: NextPage = () => {
     }
   };
 
-  const handleClickGame = (id: number) => {
-    router.push("/" + id);
+  const handleClickGame = async (
+    event: React.MouseEvent<HTMLDivElement>,
+    game: GameProps
+  ) => {
+    const target = event.target as HTMLElement;
+    const element = target.closest("div") as HTMLDivElement;
+    if (element.className.includes("Like")) {
+      if (!token) {
+        enqueueSnackbar("로그인 후 이용할 수 있는 기능입니다.", {
+          variant: "info",
+        });
+        return;
+      }
+
+      if (favoriteListsSet.current.has(game.id)) {
+        // TODO 즐겨찾기 취소 기능 작성 부분
+        return;
+      }
+
+      try {
+        await fetchFavoriteLists.post(
+          `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`,
+          {
+            data: game,
+          }
+        );
+        enqueueSnackbar(`'${game.title}' 게임이 즐겨찾기에 추가되었습니다.`, {
+          variant: "success",
+        });
+        dispatch(gameActions.addFavoriteLists(game.id));
+      } catch (error) {
+        console.error(error);
+      }
+      return;
+    }
+
+    router.push("/" + game.id);
   };
 
   useEffect(() => {
@@ -107,6 +151,10 @@ const SearchPage: NextPage = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    favoriteListsSet.current = new Set(favoriteLists);
+  }, [favoriteLists]);
 
   return (
     <div className={classes.container}>
@@ -139,7 +187,10 @@ const SearchPage: NextPage = () => {
             <SearchResultGame
               game={game}
               key={game.id}
-              onClick={() => handleClickGame(game.id)}
+              onClick={(event: React.MouseEvent<HTMLDivElement>) =>
+                handleClickGame(event, game)
+              }
+              isFavorite={favoriteListsSet.current.has(game.id)}
             />
           ))}
       </div>
