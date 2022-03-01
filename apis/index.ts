@@ -9,3 +9,4 @@ export const customAxios: AxiosInstance = axios.create({
 });
 
 export { signUpAPI, signInAPI } from "./auth";
+export { fetchFavoriteLists } from "./favorite";
