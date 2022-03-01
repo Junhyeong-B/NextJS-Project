@@ -15,13 +15,18 @@
 
   img {
     border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
     height: 6rem;
   }
 
   h2 {
     margin: 0;
   }
+}
+
+.image {
+  position: relative;
+  display: flex;
+  flex-flow: column;
 }
 
 .game {

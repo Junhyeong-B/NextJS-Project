@@ -1,16 +1,23 @@
 import { HTMLAttributes } from "react";
 import { GameProps } from ".";
+import Like from "../UI/Like";
 import classes from "./SearchResultGame.module.scss";
 
 const SearchResultGame = ({
   game,
+  isFavorite,
   ...props
 }: {
   game: GameProps;
+  isFavorite: boolean;
 } & HTMLAttributes<HTMLDivElement>): JSX.Element => {
   return (
     <div className={classes.container} {...props}>
-      <img src={game.thumbnail} alt={game.title} />
+      <div className={classes.image}>
+        {/* eslint-disable-next-line */}
+        <img src={game.thumbnail} alt={game.title} />
+        <Like isFavorite={isFavorite} />
+      </div>
       <div className={classes.game}>
         <h2>
           {game.title}{" "}
