@@ -10,6 +10,7 @@ export type SearchOptionType = {
 export type StoreGameType = {
   searchGameLists: GameProps[];
   searchOptions: SearchOptionType;
+  favoriteLists: number[];
 };
 
 const initialState: StoreGameType = {
@@ -19,6 +20,7 @@ const initialState: StoreGameType = {
     category: [],
     sortBy: "",
   },
+  favoriteLists: [],
 };
 
 const gameSlice = createSlice({
@@ -30,6 +32,14 @@ const gameSlice = createSlice({
     },
     setSearchOptions(state, action: { payload: SearchOptionType }) {
       state.searchOptions = action.payload;
+    },
+    addFavoriteLists(state, action: { payload: number | number[] }) {
+      const { payload } = action;
+      if (Array.isArray(payload)) {
+        state.favoriteLists = [...payload];
+      } else {
+        state.favoriteLists = [...state.favoriteLists, payload];
+      }
     },
   },
 });
