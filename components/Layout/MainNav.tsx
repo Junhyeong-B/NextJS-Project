@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useEffect } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, AuthType } from "../../store";
+import { fetchFavoriteLists } from "../../apis";
+import { authActions, AuthType, gameActions } from "../../store";
 import { AUTH_STORAGE_KEY } from "../../store/auth";
 import classes from "./MainNav.module.scss";
 
@@ -18,15 +19,32 @@ const MainNav = (): JSX.Element => {
     dispatch(authActions.logout());
   };
 
+  const getFavoritLists = useCallback(
+    async (token: string, userEmail: string) => {
+      const result = await fetchFavoriteLists.get(
+        `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`
+      );
+      const favoriteLists = Object.values(result.data).map(
+        (game: any) => game.data.id
+      );
+      dispatch(gameActions.addFavoriteLists(favoriteLists));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     const initialState = { token: "", email: "" };
     const { token, email } = JSON.parse(
       sessionStorage.getItem(AUTH_STORAGE_KEY) || JSON.stringify(initialState)
     );
     if (token && email) {
+      getFavoritLists(token, email);
       dispatch(authActions.login({ idToken: token, email }));
     }
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <header className={classes.header}>
