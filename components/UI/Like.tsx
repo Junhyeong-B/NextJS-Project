@@ -1,15 +1,15 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useState } from "react";
 import { Star, StarBorder } from "../../assets";
 import classes from "./Like.module.scss";
 
 export type LikeProps = {
   isFavorite: boolean;
-  updateFavorite: () => void;
 } & HTMLAttributes<HTMLButtonElement>;
 
-const Like = ({ isFavorite, updateFavorite }: LikeProps): JSX.Element => {
+const Like = ({ isFavorite: favor }: LikeProps): JSX.Element => {
+  const [isFavorite, setIsFavorite] = useState<boolean>(favor);
   const handleClick = () => {
-    updateFavorite && updateFavorite();
+    setIsFavorite((prevState) => !prevState);
   };
   return (
     <div
