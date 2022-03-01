@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { customAxios } from "../apis";
 import { Game, GameProps } from "../components";
 import classes from "../styles/home.module.scss";
+import { shuffle } from "../utils";
 
 type HomePageProps = {
   games: GameProps[];
@@ -43,7 +44,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      games: result,
+      games: shuffle(result),
     },
   };
 }
