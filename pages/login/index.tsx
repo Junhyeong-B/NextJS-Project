@@ -1,11 +1,23 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { signInAPI, signUpAPI } from "../../apis";
 import { Button } from "../../components";
 import { authActions } from "../../store";
 import classes from "../../styles/login.module.scss";
+
+export type AuthResultType = {
+  displayName: string;
+  email: string;
+  expiresIn: string;
+  idToken: string;
+  kind: string;
+  localId: string;
+  refreshToken: string;
+  registered: boolean;
+};
 
 const LoginPage: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -14,6 +26,7 @@ const LoginPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,29 +52,34 @@ const LoginPage: NextPage = () => {
 
     if (isSignup) {
       try {
-        await signUpAPI({
+        const result = await signUpAPI({
           data: JSON.stringify(data),
         }).then((response) => response.data);
 
-        alert("회원가입이 완료되었습니다.");
+        enqueueSnackbar(`${result.email} 회원가입이 완료되었습니다.`, {
+          variant: "success",
+        });
         setIsSignup(false);
         setIsLoading(false);
       } catch (error) {
-        alert("비밀번호는 6자리 이상 입력해주세요.");
+        enqueueSnackbar("비밀번호는 6자리 이상 입력해주세요.", {
+          variant: "error",
+        });
         setIsLoading(false);
       }
     } else {
       try {
-        const result = await signInAPI({
+        const result: AuthResultType = await signInAPI({
           data: JSON.stringify(data),
         }).then((response) => response.data);
-        const { idToken } = result;
+        const { idToken, email } = result;
 
-        dispatch(authActions.login({ idToken }));
+        dispatch(authActions.login({ idToken, email }));
+        enqueueSnackbar(`${email}님 안녕하세요!`, { variant: "info" });
 
         router.replace("/");
       } catch (error) {
-        alert("존재하지 않는 아이디입니다.");
+        enqueueSnackbar("존재하지 않는 아이디입니다.", { variant: "warning" });
         setIsLoading(false);
       }
     }
