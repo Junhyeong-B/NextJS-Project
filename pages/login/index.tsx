@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
@@ -86,6 +87,9 @@ const LoginPage: NextPage = () => {
   };
   return (
     <div className={classes.container}>
+      <Head>
+        <title>Free to Game List | {isSignup ? "Sign Up" : "Sign In"}</title>
+      </Head>
       <form className={classes.form} onSubmit={submitHandler}>
         <input type="email" placeholder="아이디(이메일)" ref={emailRef} />
         <input type="password" placeholder="비밀번호" ref={passwordRef} />

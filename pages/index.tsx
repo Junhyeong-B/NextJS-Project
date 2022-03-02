@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { customAxios } from "../apis";
 import { Game, GameProps } from "../components";
@@ -17,6 +18,9 @@ const HomePage: NextPage<HomePageProps> = (props) => {
 
   return (
     <div>
+      <Head>
+        <title>Free to Game List</title>
+      </Head>
       <h1 className={classes.h1}>💻PC Live games list</h1>
       <ul className={classes.game_list}>
         {props.games.map((game, i) => {

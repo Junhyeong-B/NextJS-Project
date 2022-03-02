@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
@@ -109,6 +110,7 @@ const SearchPage: NextPage = () => {
       router.push("/" + game.id);
       return;
     }
+
     if (!token) {
       enqueueSnackbar("로그인 후 이용할 수 있는 기능입니다.", {
         variant: "info",
@@ -192,6 +194,9 @@ const SearchPage: NextPage = () => {
 
   return (
     <div className={classes.container}>
+      <Head>
+        <title>Free to Game List | Search</title>
+      </Head>
       <form onSubmit={handleSubmit} className={classes.form}>
         <SelectBox
           type="Platform"
