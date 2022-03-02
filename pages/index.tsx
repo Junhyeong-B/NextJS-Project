@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { customAxios } from "../apis";
 import { Game, GameProps } from "../components";
 import classes from "../styles/home.module.scss";
@@ -12,17 +11,10 @@ type HomePageProps = {
 };
 
 const HomePage: NextPage<HomePageProps> = ({ games }) => {
-  const [gameLists, setGameLists] = useState<GameProps[]>([]);
   const router = useRouter();
   const gameClickHandler = (id: number) => {
     router.push("/" + id);
   };
-
-  useEffect(() => {
-    const randomGameLists = shuffle(games).filter((_, i) => i < 6);
-    setGameLists(randomGameLists);
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <div className={classes.container}>
@@ -32,7 +24,7 @@ const HomePage: NextPage<HomePageProps> = ({ games }) => {
       <h1 className={classes.h1}>💻PC Live games list</h1>
       <h2 className={classes.h2}>이런 게임은 어떠세요?</h2>
       <ul className={classes.game_list}>
-        {gameLists.map((game) => (
+        {games.map((game) => (
           <li onClick={() => gameClickHandler(game.id)} key={game.id}>
             <Game game={game} />
           </li>
@@ -48,10 +40,11 @@ export async function getServerSideProps() {
   const response = await customAxios
     .get("/api/games")
     .then((data) => data.data);
+  const result = shuffle(response).filter((_, i) => i < 6);
 
   return {
     props: {
-      games: response,
+      games: result,
     },
   };
 }
