@@ -1,5 +1,7 @@
-import { HTMLAttributes } from "react";
+import React, { Fragment, HTMLAttributes } from "react";
+import { useSelector } from "react-redux";
 import { GameProps } from ".";
+import { AuthType } from "../../store";
 import Like from "../UI/Like";
 import classes from "./SearchResultGame.module.scss";
 
@@ -11,13 +13,22 @@ const SearchResultGame = ({
   game: GameProps;
   isFavorite: boolean;
 } & HTMLAttributes<HTMLDivElement>): JSX.Element => {
+  const { isLoggedIn } = useSelector((state: { auth: AuthType }) => state.auth);
+
   return (
     <div className={classes.container} {...props}>
-      <div className={classes.image}>
-        {/* eslint-disable-next-line */}
-        <img src={game.thumbnail} alt={game.title} />
-        <Like isFavorite={isFavorite} />
-      </div>
+      {isLoggedIn ? (
+        <div className={classes.image}>
+          {/* eslint-disable-next-line */}
+          <img src={game.thumbnail} alt={game.title} />
+          <Like isFavorite={isFavorite} />
+        </div>
+      ) : (
+        <Fragment>
+          {/* eslint-disable-next-line */}
+          <img src={game.thumbnail} alt={game.title} />
+        </Fragment>
+      )}
       <div className={classes.game}>
         <h2>
           {game.title}{" "}
@@ -35,4 +46,4 @@ const SearchResultGame = ({
   );
 };
 
-export default SearchResultGame;
+export default React.memo(SearchResultGame);
