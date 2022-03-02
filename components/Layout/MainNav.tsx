@@ -21,13 +21,23 @@ const MainNav = (): JSX.Element => {
 
   const getFavoritLists = useCallback(
     async (token: string, userEmail: string) => {
-      const result = await fetchFavoriteLists.get(
-        `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`
-      );
-      const favoriteLists = Object.values(result.data).map(
-        (game: any) => game.data.id
-      );
-      dispatch(gameActions.addFavoriteLists(favoriteLists));
+      try {
+        const result = await fetchFavoriteLists.get(
+          `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`
+        );
+        const favoriteLists = Object.values(result.data).map(
+          (game: any) => game.data.id
+        );
+        dispatch(gameActions.addFavoriteLists(favoriteLists));
+
+        const storedKeyAndId = Object.entries(result.data).map((entry: any) => {
+          return {
+            key: entry[0],
+            id: entry[1].data.id,
+          };
+        });
+        dispatch(gameActions.addStoredKey(storedKeyAndId));
+      } catch (error) {}
     },
     [dispatch]
   );
@@ -43,8 +53,6 @@ const MainNav = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {}, []);
 
   return (
     <header className={classes.header}>
