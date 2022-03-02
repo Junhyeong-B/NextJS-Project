@@ -41,6 +41,7 @@ const GameDetail = ({
         <meta name="description" content={detail.description}></meta>
       </Head>
       <div className={classes.information}>
+        {/* eslint-disable-next-line */}
         <img
           src={detail.thumbnail}
           alt={detail.title}

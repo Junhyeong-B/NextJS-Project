@@ -87,7 +87,7 @@ const MainNav = (): JSX.Element => {
                   router.pathname === "/mypage" && classes.current_page
                 }`}
               >
-                <Link href="/mypage">My Page</Link>
+                <Link href="/favorite">Favorites</Link>
               </li>
               <li>
                 <button onClick={logoutHandler}>Logout</button>
