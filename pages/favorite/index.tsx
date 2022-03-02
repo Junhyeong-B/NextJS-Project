@@ -51,7 +51,7 @@ const FavoritePage: NextPage = () => {
   ) => {
     const target = event.target as HTMLElement;
     const element = target.closest("div") as HTMLDivElement;
-    if (!element.className.includes("Like")) {
+    if (!element.className.includes("like")) {
       router.push("/" + game.id);
       return;
     }
