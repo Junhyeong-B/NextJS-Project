@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoriteLists } from "../../apis";
 import { GameProps, SearchResultGame } from "../../components";
@@ -80,18 +80,23 @@ const FavoritePage: NextPage = () => {
 
   return (
     <div className={classes.container}>
-      <h3 className={classes.h3}>🎮 즐겨찾기 목록 🎮</h3>
-      {!!gameLists.length &&
-        gameLists.map((game) => (
-          <SearchResultGame
-            game={game}
-            key={game.id}
-            onClick={(event: React.MouseEvent<HTMLDivElement>) =>
-              handleClickGame(event, game)
-            }
-            isFavorite={true}
-          />
-        ))}
+      {!!gameLists.length ? (
+        <Fragment>
+          <h3 className={classes.h3}>🎮 즐겨찾기 목록 🎮</h3>
+          {gameLists.map((game) => (
+            <SearchResultGame
+              game={game}
+              key={game.id}
+              onClick={(event: React.MouseEvent<HTMLDivElement>) =>
+                handleClickGame(event, game)
+              }
+              isFavorite={true}
+            />
+          ))}
+        </Fragment>
+      ) : (
+        <h3 className={classes.h3}>즐겨찾기 목록에 게임이 없습니다.</h3>
+      )}
     </div>
   );
 };
