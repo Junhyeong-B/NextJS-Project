@@ -1,8 +1,8 @@
 import React, { Fragment, HTMLAttributes } from "react";
 import { useSelector } from "react-redux";
 import { GameProps } from ".";
+import { Like } from "..";
 import { AuthType } from "../../store";
-import Like from "../ui/Like";
 import classes from "./SearchResultGame.module.scss";
 
 const SearchResultGame = ({
