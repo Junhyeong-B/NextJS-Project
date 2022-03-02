@@ -7,10 +7,17 @@ export type SearchOptionType = {
   sortBy: string;
 };
 
+export type StoredKeyAndIdType = {
+  key: string;
+  id: number;
+};
+
 export type StoreGameType = {
   searchGameLists: GameProps[];
   searchOptions: SearchOptionType;
   favoriteLists: number[];
+  storedKeyAndId: StoredKeyAndIdType[];
+  currentPage: number;
 };
 
 const initialState: StoreGameType = {
@@ -21,6 +28,8 @@ const initialState: StoreGameType = {
     sortBy: "",
   },
   favoriteLists: [],
+  storedKeyAndId: [],
+  currentPage: -1,
 };
 
 const gameSlice = createSlice({
@@ -40,6 +49,28 @@ const gameSlice = createSlice({
       } else {
         state.favoriteLists = [...state.favoriteLists, payload];
       }
+    },
+    deleteGameFromFavoriteLists(state, action: { payload: number }) {
+      state.favoriteLists = state.favoriteLists.filter(
+        (id) => id !== action.payload
+      );
+      state.storedKeyAndId = state.storedKeyAndId.filter(
+        ({ id }) => id !== action.payload
+      );
+    },
+    addStoredKey(
+      state,
+      action: { payload: StoredKeyAndIdType | StoredKeyAndIdType[] }
+    ) {
+      if (Array.isArray(action.payload)) {
+        state.storedKeyAndId = action.payload;
+      } else {
+        const newState = state.storedKeyAndId.concat(action.payload);
+        state.storedKeyAndId = newState;
+      }
+    },
+    movePage(state, action: { payload: number }) {
+      state.currentPage = action.payload;
     },
   },
 });
