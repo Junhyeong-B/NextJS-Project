@@ -115,9 +115,8 @@ const SearchPage: NextPage = () => {
   ) => {
     const target = event.target as HTMLElement;
     const element = target.closest("div") as HTMLDivElement;
-    console.log(element);
     if (!element.className.includes("like")) {
-      // router.push("/" + game.id);
+      router.push("/" + game.id);
       return;
     }
 
