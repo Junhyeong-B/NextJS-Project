@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import classes from "./Button.module.scss";
+import classes from "./button.module.scss";
 
 const Button = ({
   children,

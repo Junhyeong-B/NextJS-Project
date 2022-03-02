@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { GameProps } from ".";
 import { Like } from "..";
 import { AuthType } from "../../store";
-import classes from "./SearchResultGame.module.scss";
+import classes from "./search-result-game.module.scss";
 
 const SearchResultGame = ({
   game,

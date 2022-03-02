@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import classes from "./Slider.module.scss";
+import classes from "./slider.module.scss";
 
 type SliderProps = {
   id: number;

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoriteLists } from "../../apis";
 import { authActions, AuthType, gameActions } from "../../store";
 import { AUTH_STORAGE_KEY } from "../../store/auth";
-import classes from "./MainNav.module.scss";
+import classes from "./main-nav.module.scss";
 
 const MainNav = (): JSX.Element => {
   const router = useRouter();

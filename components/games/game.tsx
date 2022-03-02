@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import classes from "./Game.module.scss";
+import classes from "./game.module.scss";
 
 export type GameProps = {
   developer: string;

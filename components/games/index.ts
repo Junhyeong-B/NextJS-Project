@@ -1,7 +1,7 @@
-export { default as Game } from "./Game";
-export type { GameProps } from "./Game";
+export { default as Game } from "./game";
+export type { GameProps } from "./game";
 
-export { default as GameDetail } from "./GameDetail";
-export type { GameDetailProps } from "./GameDetail";
+export { default as GameDetail } from "./game-detail";
+export type { GameDetailProps } from "./game-detail";
 
-export { default as SearchResultGame } from "./SearchResultGame";
+export { default as SearchResultGame } from "./search-result-game";

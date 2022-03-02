@@ -1,5 +1,5 @@
 import { Fragment, HTMLAttributes } from "react";
-import MainNav from "./MainNav";
+import MainNav from "./main-nav";
 
 const Layout = (props: HTMLAttributes<HTMLElement>): JSX.Element => {
   return (

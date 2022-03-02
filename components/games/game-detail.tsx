@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { HTMLAttributes } from "react";
 import { Slider } from "..";
-import classes from "./GameDetail.module.scss";
+import classes from "./game-detail.module.scss";
 
 export type GameDetailProps = {
   id: number;

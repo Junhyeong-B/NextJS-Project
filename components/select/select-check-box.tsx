@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SelectProps } from ".";
-import classes from "./Select.module.scss";
+import classes from "./select.module.scss";
 
 const SelectCheckBox = ({
   type,

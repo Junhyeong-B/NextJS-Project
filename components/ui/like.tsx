@@ -1,5 +1,5 @@
 import { Star, StarBorder } from "../../assets";
-import classes from "./Like.module.scss";
+import classes from "./like.module.scss";
 
 const Like = ({ isFavorite }: { isFavorite: boolean }): JSX.Element => {
   return (
