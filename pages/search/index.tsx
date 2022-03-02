@@ -19,7 +19,7 @@ import {
   StoreGameType,
   StoredKeyAndIdType,
 } from "../../store";
-import classes from "../../styles/search.module.scss";
+import classes from "../../styles/Search.module.scss";
 
 const SearchPage: NextPage = () => {
   const [platform, setPlatform] = useState<string>("");

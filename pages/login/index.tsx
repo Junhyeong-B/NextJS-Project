@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { signInAPI, signUpAPI } from "../../apis";
 import { Button } from "../../components";
 import { authActions } from "../../store";
-import classes from "../../styles/login.module.scss";
+import classes from "../../styles/Login.module.scss";
 
 export type AuthResultType = {
   displayName: string;

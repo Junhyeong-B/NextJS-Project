@@ -11,7 +11,7 @@ import {
   StoredKeyAndIdType,
   StoreGameType,
 } from "../../store";
-import classes from "../../styles/favorite.module.scss";
+import classes from "../../styles/Favorite.module.scss";
 
 const FavoritePage: NextPage = () => {
   const [gameLists, setGameLists] = useState<GameProps[]>([]);

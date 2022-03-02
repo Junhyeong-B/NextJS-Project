@@ -6,9 +6,9 @@ export { SearchResultGame } from "./games";
 export type { GameProps } from "./games";
 export type { GameDetailProps } from "./games";
 
-export { Slider } from "./UI";
-export { Button } from "./UI";
-export { Like } from "./UI";
+export { Slider } from "./ui";
+export { Button } from "./ui";
+export { Like } from "./ui";
 
 export { SelectBox } from "./select";
 export { SelectCheckBox } from "./select";
