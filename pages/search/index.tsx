@@ -1,3 +1,4 @@
+import { Stack, Pagination } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -26,9 +27,13 @@ const SearchPage: NextPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [searchResults, setSearchResults] = useState<GameProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { searchGameLists, searchOptions, storedKeyAndId } = useSelector(
-    (state: { game: StoreGameType }) => state.game
-  );
+  const {
+    searchGameLists,
+    searchOptions,
+    storedKeyAndId,
+    currentPage,
+    maxPage,
+  } = useSelector((state: { game: StoreGameType }) => state.game);
   const dispatch = useDispatch();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -86,7 +91,9 @@ const SearchPage: NextPage = () => {
         .get("/api/games", { params })
         .then((response) => response.data);
 
-      setSearchResults(result);
+      const firstPageGames = result.filter((_: GameProps, i: number) => i < 10);
+
+      setSearchResults(firstPageGames);
       dispatch(gameActions.setSearchGameLists(result));
       dispatch(
         gameActions.setSearchOptions({
@@ -95,6 +102,8 @@ const SearchPage: NextPage = () => {
           sortBy,
         })
       );
+      dispatch(gameActions.movePage(1));
+      dispatch(gameActions.updateMaxPage(Math.ceil(result.length / 10)));
     } catch (error) {
       console.error(error);
     }
@@ -169,8 +178,12 @@ const SearchPage: NextPage = () => {
   };
 
   useEffect(() => {
-    if (searchGameLists.length) {
-      setSearchResults(searchGameLists);
+    if (searchGameLists.length && currentPage > 0) {
+      const currentPageGameLists = searchGameLists.filter(
+        (_, i: number) =>
+          (currentPage - 1) * 10 <= i && i + 1 <= currentPage * 10
+      );
+      setSearchResults(currentPageGameLists);
     }
 
     if (searchOptions.platform) {
@@ -191,6 +204,14 @@ const SearchPage: NextPage = () => {
   useEffect(() => {
     favoriteListsSet.current = new Set(favoriteLists);
   }, [favoriteLists]);
+
+  const handleChange = (_: unknown, value: number) => {
+    const newLists = searchGameLists.filter(
+      (_, i: number) => (value - 1) * 10 <= i && i + 1 <= value * 10
+    );
+    dispatch(gameActions.movePage(value));
+    setSearchResults(newLists);
+  };
 
   return (
     <div className={classes.container}>
@@ -233,6 +254,16 @@ const SearchPage: NextPage = () => {
             />
           ))}
       </div>
+      {maxPage > 0 && (
+        <div className={classes.pagenation}>
+          <Pagination
+            count={maxPage}
+            defaultPage={currentPage}
+            color="primary"
+            onChange={handleChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

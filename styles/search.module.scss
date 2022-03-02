@@ -24,8 +24,30 @@
 }
 
 .results_container {
-  margin-top: 1rem;
+  margin: 1rem 0 5rem;
   display: flex;
   flex-flow: column;
   gap: 1rem;
+}
+
+.pagenation {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #ececec;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  @keyframes fade-in {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  animation: fade-in 300ms ease;
 }
