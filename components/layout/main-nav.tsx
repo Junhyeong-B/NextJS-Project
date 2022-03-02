@@ -84,7 +84,7 @@ const MainNav = (): JSX.Element => {
             <Fragment>
               <li
                 className={`${
-                  router.pathname === "/mypage" && classes.current_page
+                  router.pathname === "/favorite" && classes.current_page
                 }`}
               >
                 <Link href="/favorite">Favorites</Link>
