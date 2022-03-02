@@ -21,6 +21,7 @@ const Game = ({
 }: { game: GameProps } & HTMLAttributes<HTMLDivElement>): JSX.Element => {
   return (
     <div className={classes.container} {...props}>
+      {/* eslint-disable-next-line */}
       <img src={game.thumbnail} alt={game.title} />
       <div className={classes.game}>
         <h2>

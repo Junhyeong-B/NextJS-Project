@@ -52,6 +52,7 @@ const Slider = (props: {
             key={screenshot.id}
             style={{ transform: `translateX(-${currentIndex}00%)` }}
           >
+            {/* eslint-disable-next-line */}
             <img src={screenshot.image} alt={`${props.title} screenshot`} />
           </li>
         ))}
