@@ -18,6 +18,7 @@ export type StoreGameType = {
   favoriteLists: number[];
   storedKeyAndId: StoredKeyAndIdType[];
   currentPage: number;
+  maxPage: number;
 };
 
 const initialState: StoreGameType = {
@@ -30,6 +31,7 @@ const initialState: StoreGameType = {
   favoriteLists: [],
   storedKeyAndId: [],
   currentPage: -1,
+  maxPage: -1,
 };
 
 const gameSlice = createSlice({
@@ -71,6 +73,9 @@ const gameSlice = createSlice({
     },
     movePage(state, action: { payload: number }) {
       state.currentPage = action.payload;
+    },
+    updateMaxPage(state, action: { payload: number }) {
+      state.maxPage = action.payload;
     },
   },
 });
