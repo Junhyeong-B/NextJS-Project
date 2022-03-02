@@ -11,7 +11,12 @@ import {
   SelectCheckBox,
 } from "../../components";
 import { PLATFORMS, SORTBY, TAGS } from "../../constants";
-import { AuthType, gameActions, StoreGameType } from "../../store";
+import {
+  AuthType,
+  gameActions,
+  StoreGameType,
+  StoredKeyAndIdType,
+} from "../../store";
 import classes from "../../styles/search.module.scss";
 
 const SearchPage: NextPage = () => {
@@ -19,7 +24,8 @@ const SearchPage: NextPage = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("");
   const [searchResults, setSearchResults] = useState<GameProps[]>([]);
-  const { searchGameLists, searchOptions } = useSelector(
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { searchGameLists, searchOptions, storedKeyAndId } = useSelector(
     (state: { game: StoreGameType }) => state.game
   );
   const dispatch = useDispatch();
@@ -99,37 +105,65 @@ const SearchPage: NextPage = () => {
   ) => {
     const target = event.target as HTMLElement;
     const element = target.closest("div") as HTMLDivElement;
-    if (element.className.includes("Like")) {
-      if (!token) {
-        enqueueSnackbar("로그인 후 이용할 수 있는 기능입니다.", {
-          variant: "info",
-        });
-        return;
-      }
-
-      if (favoriteListsSet.current.has(game.id)) {
-        // TODO 즐겨찾기 취소 기능 작성 부분
-        return;
-      }
-
-      try {
-        await fetchFavoriteLists.post(
-          `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`,
-          {
-            data: game,
-          }
-        );
-        enqueueSnackbar(`'${game.title}' 게임이 즐겨찾기에 추가되었습니다.`, {
-          variant: "success",
-        });
-        dispatch(gameActions.addFavoriteLists(game.id));
-      } catch (error) {
-        console.error(error);
-      }
+    if (!element.className.includes("Like")) {
+      router.push("/" + game.id);
+      return;
+    }
+    if (!token) {
+      enqueueSnackbar("로그인 후 이용할 수 있는 기능입니다.", {
+        variant: "info",
+      });
       return;
     }
 
-    router.push("/" + game.id);
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    if (favoriteListsSet.current.has(game.id)) {
+      const clickedGame: StoredKeyAndIdType = storedKeyAndId.filter(
+        (value) => value.id === game.id
+      )[0];
+
+      try {
+        await fetchFavoriteLists.delete(
+          `/${userEmail.replace(/\./g, "")}/games/${
+            clickedGame.key
+          }.json?auth=${token}`
+        );
+
+        enqueueSnackbar(`${game.title} 게임이 즐겨찾기에서 제거되었습니다.`, {
+          variant: "error",
+        });
+        dispatch(gameActions.deleteGameFromFavoriteLists(game.id));
+      } catch (error) {
+        console.error(error);
+      }
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const result = await fetchFavoriteLists.post(
+        `/${userEmail.replace(/\./g, "")}/games.json?auth=${token}`,
+        {
+          data: game,
+        }
+      );
+
+      enqueueSnackbar(`'${game.title}' 게임이 즐겨찾기에 추가되었습니다.`, {
+        variant: "success",
+      });
+      dispatch(gameActions.addFavoriteLists(game.id));
+      dispatch(
+        gameActions.addStoredKey({ key: result.data.name, id: game.id })
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -182,7 +216,7 @@ const SearchPage: NextPage = () => {
         </button>
       </form>
       <div className={classes.results_container}>
-        {searchResults.length &&
+        {!!searchResults.length &&
           searchResults.map((game) => (
             <SearchResultGame
               game={game}
